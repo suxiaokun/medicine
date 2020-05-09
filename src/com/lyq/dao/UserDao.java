@@ -11,114 +11,112 @@ import com.lyq.persistence.Medicine;
 import com.lyq.persistence.User;
 import com.lyq.util.HibernateFilter;
 /**
- * ÓÃ»§Êı¾İ¿â²Ù×÷Àà
- * ÓÃÓÚ²éÑ¯ÓÃ»§¼°ÏµÍ³³õÊ¼»¯
+ * ç”¨æˆ·æ•°æ®åº“æ“ä½œç±»
+ * ç”¨äºæŸ¥è¯¢ç”¨æˆ·åŠç³»ç»Ÿåˆå§‹åŒ–
  * @author Su Xiao Kun
  */
 public class UserDao extends SupperDao {
 	/**
-	 * ²éÑ¯ÓÃ»§
-	 * @param userName
-	 * @param password
+	 * æŸ¥è¯¢ç”¨æˆ·
 	 * @return User
 	 */
 	public User login(String userName,String password){
 		User user = null;
 		try {
-			session = HibernateFilter.getSession();		//»ñÈ¡Session¶ÔÏó
-			session.beginTransaction();					//¿ªÆôÊÂÎï
-			//HQL²éÑ¯Óï¾ä
+			session = HibernateFilter.getSession();		//è·å–Sessionå¯¹è±¡
+			session.beginTransaction();					//å¼€å¯äº‹ç‰©
+			//HQLæŸ¥è¯¢è¯­å¥
 			String hql = "from User u where u.username=? and u.password=?";
-			Query query = session.createQuery(hql)		//´´½¨Query¶ÔÏó
-								.setParameter(0, userName)//¶¯Ì¬¸³Öµ
-								.setParameter(1, password);//¶¯Ì¬¸³Öµ
-			user = (User)query.uniqueResult();			//·µ»ØUser¶ÔÏó
-			session.getTransaction().commit();			//Ìá½»ÊÂÎï
+			Query query = session.createQuery(hql)		//åˆ›å»ºQueryå¯¹è±¡
+								.setParameter(0, userName)//åŠ¨æ€èµ‹å€¼
+								.setParameter(1, password);//åŠ¨æ€èµ‹å€¼
+			user = (User)query.uniqueResult();			//è¿”å›Userå¯¹è±¡
+			session.getTransaction().commit();			//æäº¤äº‹ç‰©
 		} catch (Exception e) {
-			e.printStackTrace();						//´òÓ¡Òì³£ĞÅÏ¢
-			session.getTransaction().rollback();		//»Ø¹öÊÂÎï
+			e.printStackTrace();						//æ‰“å°å¼‚å¸¸ä¿¡æ¯
+			session.getTransaction().rollback();		//å›æ»šäº‹ç‰©
 		}
 		return user;
 	}
 	/**
-	 * ¸ù¾İid²éÑ¯ÓÃ»§
+	 * æ ¹æ®idæŸ¥è¯¢ç”¨æˆ·
 	 * @param id
 	 * @return User
 	 */
 	public User loadUser(int id){
 		User user = null;
 		try {
-			session = HibernateFilter.getSession();		//»ñÈ¡Session¶ÔÏó
-			session.beginTransaction();					//¿ªÆôÊÂÎï
-			//¸ù¾İid¼ÓÔØÓÃ»§
+			session = HibernateFilter.getSession();		//è·å–Sessionå¯¹è±¡
+			session.beginTransaction();					//å¼€å¯äº‹ç‰©
+			//æ ¹æ®idåŠ è½½ç”¨æˆ·
 			user = (User)session.load(User.class, new Integer(id));
-			session.getTransaction().commit();			//Ìá½»ÊÂÎï
+			session.getTransaction().commit();			//æäº¤äº‹ç‰©
 		} catch (Exception e) {
-			e.printStackTrace();						//´òÓ¡Òì³£ĞÅÏ¢
-			session.getTransaction().rollback();		//»Ø¹öÊÂÎï
+			e.printStackTrace();						//æ‰“å°å¼‚å¸¸ä¿¡æ¯
+			session.getTransaction().rollback();		//å›æ»šäº‹ç‰©
 		}
 		return user;
 	}
 	/**
-	 * ÏµÍ³³õÊ¼»¯Êı¾İ
+	 * ç³»ç»Ÿåˆå§‹åŒ–æ•°æ®
 	 */
 	public void initialization(){
 		try {
 			Configuration cfg = new Configuration().configure();
 			SchemaExport export = new SchemaExport(cfg);
 			export.create(true, true);
-			session = HibernateFilter.getSession();		//»ñÈ¡Session¶ÔÏó
-			session.beginTransaction();					//¿ªÆôÊÂÎï
+			session = HibernateFilter.getSession();		//è·å–Sessionå¯¹è±¡
+			session.beginTransaction();					//å¼€å¯äº‹ç‰©
 
 			Category c1 = new Category();
-			c1.setName("¸ĞÃ°ÓÃÒ©");
-			c1.setDescription("Ö÷ÖÎ¸ĞÃ°¡¢·¢ÉÕ¡¢Í·Í´¡£");
+			c1.setName("æ„Ÿå†’ç”¨è¯");
+			c1.setDescription("ä¸»æ²»æ„Ÿå†’ã€å‘çƒ§ã€å¤´ç—›ã€‚");
 			c1.setCreateTime(new Date());
 			
 			Category c2 = new Category();
-			c2.setName("Î¸³¦ÓÃÒ©");
-			c2.setDescription("Î¸Ñ×¡¢³¦Ñ××¨ÓÃÒ©¡£");
+			c2.setName("èƒƒè‚ ç”¨è¯");
+			c2.setDescription("èƒƒç‚ã€è‚ ç‚ä¸“ç”¨è¯ã€‚");
 			c2.setCreateTime(new Date());
 			
 			Category c3 = new Category();
-			c3.setName("¶ùÍ¯ÓÃÒ©");
-			c3.setDescription("É÷ÓÃ£¬¶ùÍ¯ÓÃÒ©¡£");
+			c3.setName("å„¿ç«¥ç”¨è¯");
+			c3.setDescription("æ…ç”¨ï¼Œå„¿ç«¥ç”¨è¯ã€‚");
 			c3.setCreateTime(new Date());
 			
 			Medicine d1 = new Medicine();
-			d1.setName("¸ĞÃ°½ºÄÒA");
+			d1.setName("æ„Ÿå†’èƒ¶å›ŠA");
 			d1.setPrice(2.5);
 			d1.setMedCount(3);
 			d1.setCategory(c1);
-			d1.setFactoryAdd("ÖÆÒ©Ò»³§");
-			d1.setDescription("Ğ§¹ûºÜºÃ");
+			d1.setFactoryAdd("åˆ¶è¯ä¸€å‚");
+			d1.setDescription("æ•ˆæœå¾ˆå¥½");
 			d1.setMedNo("abc001");
 			
 			Medicine d2 = new Medicine();
-			d2.setName("¸ĞÃ°½ºÄÒB");
+			d2.setName("æ„Ÿå†’èƒ¶å›ŠB");
 			d2.setPrice(10.05);
 			d2.setMedCount(10);
 			d2.setCategory(c1);
-			d2.setFactoryAdd("ÖÆÒ©Ò»³§");
-			d2.setDescription("ÖÎÁÆÉË·ç¡¢Í·Í´Ğ§¹ûºÜºÃ");
+			d2.setFactoryAdd("åˆ¶è¯ä¸€å‚");
+			d2.setDescription("æ²»ç–—ä¼¤é£ã€å¤´ç—›æ•ˆæœå¾ˆå¥½");
 			d2.setMedNo("abc002");
 			
 			Medicine d3 = new Medicine();
-			d3.setName("xx³¦Ñ×Áé");
+			d3.setName("xxè‚ ç‚çµ");
 			d3.setPrice(5.8);
 			d3.setMedCount(100);
 			d3.setCategory(c2);
-			d3.setFactoryAdd("ÖÆÒ©¶ş³§");
-			d3.setDescription("Ö÷ÖÎÀ­¶Ç×Ó");
+			d3.setFactoryAdd("åˆ¶è¯äºŒå‚");
+			d3.setDescription("ä¸»æ²»æ‹‰è‚šå­");
 			d3.setMedNo("abc003");
 			
 			Medicine d4 = new Medicine();
-			d4.setName("Ğ¡¶ù¸ĞÃ°³å¼Á");
+			d4.setName("å°å„¿æ„Ÿå†’å†²å‰‚");
 			d4.setPrice(5.8);
 			d4.setMedCount(100);
 			d4.setCategory(c3);
-			d4.setFactoryAdd("ÖÆÒ©Èı³§");
-			d4.setDescription("Ğ§¹ûºÜºÃ");
+			d4.setFactoryAdd("åˆ¶è¯ä¸‰å‚");
+			d4.setDescription("æ•ˆæœå¾ˆå¥½");
 			d4.setMedNo("abc004");
 			
 			User u = new User();
@@ -132,9 +130,9 @@ public class UserDao extends SupperDao {
 			session.save(d4);
 			session.save(u);
 			
-			session.getTransaction().commit();			//Ìá½»ÊÂÎï
+			session.getTransaction().commit();			//æäº¤äº‹ç‰©
 		} catch (Exception e) {
-			session.getTransaction().rollback();		//»Ø¹öÊÂÎï
+			session.getTransaction().rollback();		//å›æ»šäº‹ç‰©
 			e.printStackTrace();
 		}finally{
 			if(session != null){
