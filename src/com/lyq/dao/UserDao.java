@@ -13,7 +13,7 @@ import com.lyq.util.HibernateFilter;
 /**
  * 用户数据库操作类
  * 用于查询用户及系统初始化
- * @author Li Yong Qiang
+ * @author Su Xiao Kun
  */
 public class UserDao extends SupperDao {
 	/**
